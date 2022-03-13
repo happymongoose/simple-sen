@@ -82,5 +82,15 @@ class YearGroupSeeder extends Seeder
             'name' => 'Year 11',
         ]);
 
+        DB::table("year_groups")->insert([
+            'year' => '12',
+            'name' => 'Year 12',
+        ]);
+
+        DB::table("year_groups")->insert([
+            'year' => '13',
+            'name' => 'Year 13',
+        ]);
+
     }
 }
