@@ -1,0 +1,311 @@
+
+/************************************
+*
+* User interface
+*
+************************************/
+
+.sidebar-divider {
+  color: white;
+}
+
+::placeholder {
+  font-style: italic;
+  color: #b7b9cc !important;
+}
+
+/************************************
+*
+* Table cells
+*
+************************************/
+
+.table-cell-clickable {
+    cursor: pointer;
+}
+
+.table-dropdown {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+}
+
+/************************************
+*
+* Tags
+*
+************************************/
+
+.tagger {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0px;
+    background-color: #f8fafc;
+}
+
+.tagger>ul {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.tagger>ul>li:not(.tagger-new)>a {
+  background: #4e73df;
+  color: white;
+  border: none;
+  transition-duration: 0.2s;
+}
+
+.tagger>ul>li:not(.tagger-new)>a:hover {
+  opacity: 0.75;
+}
+
+/************************************
+*
+* Messages and notifications
+*
+************************************/
+
+.notify {
+  z-index: 10 !important;
+}
+
+/************************************
+*
+* Sticky notes
+*
+************************************/
+
+.view-note-button {
+    cursor: default;
+}
+
+.notes {
+  margin-top: 32px;
+}
+
+.notes * {
+    margin:0;
+    padding:0;
+  }
+
+.notes h2 {
+    font-weight: 300;
+    font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    line-height: 34px;
+  }
+
+.notes p {
+  /*
+    font-family: 'Reenie Beanie';;
+    font-size: 28px;
+    line-height: 28px;
+    */
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 200;
+    margin-bottom: 16px;
+  }
+
+.notes .note-header {
+    display: inline-block;
+    width: 100%;
+}
+
+.notes .note-date {
+    font-family: inherit;
+    font-size: 12px;
+    text-align: right;
+    margin-bottom: 0px;
+    margin-top: 8px;
+    padding-bottom: 0px;
+    float: right;
+    font-weight: 200;
+}
+
+.notes .note-tags {
+  margin-top: 0px;
+  padding: 0px;
+  margin-bottom: 12px;
+}
+
+.notes .note-tag-text {
+  background-color: rgba(0,0,0,0.2);
+  border: none;
+  color: black;
+  margin-top: 4px;
+  font-size: 12px;
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 2px;
+  border-radius: 8px;
+  text-transform: lowercase;
+}
+
+.notes hr {
+  border: none;
+  margin-bottom: 8px;
+}
+
+.notes .note-creator-text {
+  font-family: inherit;
+  font-size: 12px;
+  text-align: right;
+  margin-bottom: 0px;
+  margin-top: 8px;
+  padding-bottom: 0px;
+  font-weight: 200;
+  float: left;
+  white-space: nowrap;
+  overflow: scroll;
+  max-width: 50%;
+}
+
+.notes li {
+  margin-right: 32px !important;
+}
+
+.notes ul,li{
+    list-style:none;
+  }
+
+.notes ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+  }
+
+.notes ul li a{
+    text-decoration:none;
+    color:#000;
+    background-color:#ffc;
+    display:block;
+    min-height: 256px;
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 300px;
+    padding: 0 16px 16px 16px;
+    box-shadow: 5px 5px 7px rgba(33,33,33,.3);
+    transform: rotate(-2deg);
+    transition: transform .15s linear;
+    border: 1px solid rgba(0,0,0,0.05);
+
+  }
+
+.notes ul li:nth-child(2n) a{
+    transform:rotate(2deg);
+    position:relative;
+    top:5px;
+    background:#cfc;
+  }
+
+.notes ul li:nth-child(3n) a{
+    transform:rotate(-3deg);
+    position:relative;
+    top:-5px;
+    background:#ccf;
+  }
+
+.notes ul li:nth-child(4n) a{
+    transform:rotate(4deg);
+    position:relative;
+    top:-10px;
+    background:#cff;
+  }
+
+  .notes ul li:nth-child(6n) a{
+      background:#fdd;
+    }
+
+.notes ul li{
+    margin: 0px 30px 40px 0px;
+  }
+
+.notes ul li a:hover,.notes ul li a:focus {
+    box-shadow: 8px 8px 9px rgba(33,33,33,.3);
+    transform: scale(1.1);
+    position:relative;
+    z-index:5;
+}
+
+/************************************
+*
+* Toggle switch
+*
+************************************/
+
+input.toggle-switch {
+  position: relative;
+  -webkit-appearance: none;
+  outline: none;
+  width: 50px;
+  height: 30px;
+  background-color: #fff;
+  border: 1px solid #D9DADC;
+  border-radius: 50px;
+  box-shadow: inset -20px 0 0 0 #fff;
+  transition-duration: 0.1s;
+}
+
+input.toggle-switch:after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  background: transparent;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+}
+
+input.toggle-switch:checked {
+  box-shadow: inset 20px 0 0 0 #4ed164;
+  border-color: #4ed164;
+}
+
+input.toggle-switch:checked:after {
+  left: 20px;
+  box-shadow: -2px 4px 3px rgba(0,0,0,0.05);
+}
+
+.toggle-switch-table {
+  border: none;
+}
+.toggle-switch-table td {
+  vertical-align: middle;
+}
+
+/************************************
+*
+* Colour picker
+*
+************************************/
+
+.input-group-text {
+  border-radius: 0px !important;
+  padding: 0px !important;
+  border: none !important;
+}
+
+.colorpicker-input-addon:before, .colorpicker-input-addon i {
+    width: 32px !important;
+    height: 32px !important;
+    border: 1px solid black !important;
+}
+
+
+/************************************
+*
+* Cohort condition elements
+*
+************************************/
+
+.condition-field-dropdown {
+  max-width: 400px;
+}

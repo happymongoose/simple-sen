@@ -1,0 +1,27 @@
+
+To make a tag list:
+
+1. Include the following in the script section
+
+<script src="{{ asset("js/tagger.js") }}"></script>
+
+2. Add the tag component to the form
+
+<x-input-tag tags="tag 1, tag 2, tag 3" name="tags" id="tags" />
+
+3. Add the following script at the bottom of the blade
+
+<script>
+
+var tags = tagger($('#tags'), {
+    allow_duplicates: false,
+    allow_spaces: false,  <--- if needed
+    add_on_blur: true,
+    wrap: true,
+    link: function() { return false; },
+    completion: {
+        list: [{!! $all_tags_as_string !!}]
+    }
+});
+
+</script>

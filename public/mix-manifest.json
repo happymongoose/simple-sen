@@ -1,0 +1,13 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/bootstrap-colorpicker.min.css": "/css/bootstrap-colorpicker.min.css",
+    "/css/tagger.css": "/css/tagger.css",
+    "/css/colorpicker.css": "/css/colorpicker.css",
+    "/css/sweetalert2.css": "/css/sweetalert2.css",
+    "/js/libraries.js": "/js/libraries.js",
+    "/resources/views/vendor/jsvalidation/bootstrap.php": "/resources/views/vendor/jsvalidation/bootstrap.php",
+    "/resources/views/vendor/jsvalidation/bootstrap4.php": "/resources/views/vendor/jsvalidation/bootstrap4.php",
+    "/resources/views/vendor/jsvalidation/bootstrap5.php": "/resources/views/vendor/jsvalidation/bootstrap5.php",
+    "/resources/views/vendor/jsvalidation/uikit.php": "/resources/views/vendor/jsvalidation/uikit.php"
+}
