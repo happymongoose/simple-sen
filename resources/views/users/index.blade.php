@@ -1,7 +1,7 @@
-  @extends('layouts.app')
+@extends('layouts.app')
 
 @section('page-title')
-Classes
+Adult users
 @endsection
 
 @section('content')

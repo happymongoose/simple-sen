@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 
 <?php
-  use App\Models\Sidebar;
+  use App\Helpers\Sidebar;
 
   //Load side bar object
   $sidebar = new Sidebar();
@@ -11,10 +11,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route("home") }}">
-        <div class="sidebar-brand-icon">
-            <i class="fas fa-school"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Simple SEN</div>
+      <img src="{{ asset("img/simple-sen-logo-white.svg") }}" class="sidebar-logo"/>
     </a>
 
     <!-- Divider -->

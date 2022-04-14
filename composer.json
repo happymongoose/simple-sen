@@ -16,7 +16,8 @@
         "laravelcollective/html": "^6.2",
         "mckenziearts/laravel-notify": "^2.2",
         "nesbot/carbon": "^2.56",
-        "proengsoft/laravel-jsvalidation": "^4.6"
+        "proengsoft/laravel-jsvalidation": "^4.6",
+        "spatie/laravel-backup": "^7.0.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

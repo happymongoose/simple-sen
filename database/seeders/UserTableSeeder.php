@@ -25,6 +25,10 @@ class UserTableSeeder extends Seeder
         );
       }
 
+      //If running in a production environment, don't add any test users
+      if (env('APP_ENV')=="production")
+        return;
+
       //Create standard user
       User::firstOrCreate(
           ['email' => "user"], [

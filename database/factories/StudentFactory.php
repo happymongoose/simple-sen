@@ -19,13 +19,12 @@ class StudentFactory extends Factory
      */
     public function definition()
     {
-        $teachingGroupID = $this->faker->numberBetween(1, 9);
-        $yearGroup = $teachingGroupID-3;
-        if ($yearGroup<-1) $yearGroup=-1;
+        $yearGroup = $this->faker->numberBetween(3,17);
+        $teachingGroup = $this->faker->numberBetween(2,16);
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'teaching_group_id' => $teachingGroupID,
+            'teaching_group_id' => $teachingGroup,
             'year_group' => $yearGroup,
         ];
     }

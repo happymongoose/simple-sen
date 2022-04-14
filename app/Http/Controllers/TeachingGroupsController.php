@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\TeachingGroup;
 use App\Models\Student;
+use App\Helpers\FunctionLibrary;
+
 use App\Http\Requests\StoreTeachingGroupRequest;
 
 //TODO: Move individual student to another class
@@ -46,8 +48,11 @@ class TeachingGroupsController extends Controller
 
   public function index(Request $request) {
 
-    //Get the pagination length (if set)
-    $max_results = $request->input("max_results", 20);
+    //Instantiate a function library
+    $functionLibrary = new FunctionLibrary;
+
+    //Get the maximum number of rows for the table
+    $max_results = $functionLibrary->getTableMaxRows($request);
 
     //Grab a list of all the teaching groups
     $teaching_groups = TeachingGroup::where('id', '>', 0)->orderBy('name')->paginate($max_results);
@@ -99,8 +104,11 @@ class TeachingGroupsController extends Controller
     //Signify this is an edit
     $edit=true;
 
-    //Get the pagination length (if set)
-    $max_results = $request->input("max_results", 30);
+    //Instantiate a function library
+    $functionLibrary = new FunctionLibrary;
+
+    //Get the maximum number of rows for the table
+    $max_results = $functionLibrary->getTableMaxRows($request);
 
     //Sort students
     $students = Student::where('teaching_group_id', $group->id)->orderBy('first_name')->orderBy('last_name')->get();
@@ -197,8 +205,11 @@ class TeachingGroupsController extends Controller
 
   public function view(TeachingGroup $group, Request $request) {
 
-    //Get the pagination length (if set)
-    $max_results = $request->input("max_results", 20);
+    //Instantiate a function library
+    $functionLibrary = new FunctionLibrary;
+
+    //Get the maximum number of rows for the table
+    $max_results = $functionLibrary->getTableMaxRows($request);
 
     //Grab a list of all the teaching groups
     $students = Student::where('teaching_group_id', $group->id)->orderBy('first_name')->orderBy('last_name')->paginate($max_results);

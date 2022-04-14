@@ -29,18 +29,5 @@ class RegistrySeeder extends Seeder
             'value' => 'jS F Y',
         ]);
 
-        //Year group range - default to nursery to year 6
-        //This key uses the year value, rather than the year_id field
-        DB::table("registry")->insert([
-            'key' => 'year-group-low',
-            'type' => 'i',
-            'value' => '-1',
-        ]);
-        DB::table("registry")->insert([
-            'key' => 'year-group-high',
-            'type' => 'i',
-            'value' => '6',
-        ]);
-
     }
 }

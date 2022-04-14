@@ -12,6 +12,9 @@ use App\Models\Note;
 use App\Models\TeachingGroup;
 use App\Models\YearGroup;
 
+use App\Helpers\StudentSearchQuery;
+use App\Helpers\FunctionLibrary;
+
 use App\Http\Controllers\TagsController;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Requests\CreateStudentRequest;
@@ -88,86 +91,17 @@ class StudentsController extends Controller
 
   public function index(Request $request) {
 
-    //Get the pagination length (if set)
-    $max_results = $request->input("max_results", 20);
+    //Instantiate a function library
+    $functionLibrary = new FunctionLibrary;
+
+    //Get the maximum number of rows for the table
+    $max_results = $functionLibrary->getTableMaxRows($request);
 
     //Grab any search text passed by user
     $search_text = $request->input("search");
 
-    //If no search text has been passed, show all students...
-    if ($search_text=="") {
-      //Grab a list of all the teaching groups
-      $students = Student::where('id', '>', 0)->orderBy('first_name')->paginate($max_results);
-      //Adjust pagination for maximum number of results per page
-      $students->appends([ 'max_results' => $max_results]);
-    } else {
-
-      //Break search text into an array
-      $raw_search_strings = explode(" ", $search_text);
-
-      //Do the same for the search string array
-      $search_strings = [];
-      foreach($raw_search_strings as $raw_search_string)
-        $search_strings[] = "%" . $raw_search_string . "%";
-
-      //-----------------------------------
-      //
-      // Search by personal information
-      //
-      //-----------------------------------
-
-      //Start by searching text in students personal information
-      $student_ids_collection = DB::Table("students")->select("*");
-      $skip_count=0;
-      foreach ($search_strings as $key => $search_string) {
-
-        //Ignore tag only searches
-        if (str_starts_with($search_string, "%tag:" )) {
-          $skip_count++;
-          continue;
-        }
-
-        if ($key==0)
-          $student_ids_collection->where('first_name', 'like', $search_string)->orWhere('last_name', 'like', $search_string);
-        else
-          $student_ids_collection->orWhere('first_name', 'like', $search_string)->orWhere('last_name', 'like', $search_string);
-      }
-      if ($skip_count<count($search_strings))
-        $student_ids_simple = $student_ids_collection->get()->pluck('id')->toArray();
-      else
-        $student_ids_simple = [];
-
-      //-----------------------------------
-      //
-      // Search by tag
-      //
-      //-----------------------------------
-
-      //Get any tags matching the search string
-      $tags_collection = DB::Table("tags")->select("*");
-      foreach ($search_strings as $key => $search_string) {
-
-        //If this is a tag specific search (in the form %tag:adhd%), remove the 'tag:' prefix (so it becomes %adhd%)
-        //Also remove % % prefix, because want to search for exact match
-        if (str_starts_with($search_string, "%tag:"))
-          $search_string = substr($search_string, 5, -1);
-
-        if ($key==0)
-          $tags_collection->where('tag', 'like', $search_string);
-        else
-          $tags_collection->orWhere('tag', 'like', $search_string);
-      }
-      $tag_ids = $tags_collection->get()->pluck('id');
-
-      //Find any students with one of those tags
-      $student_ids_tags = DB::table('tag_student')->whereIn('tag_id', $tag_ids)->get()->pluck('student_id')->toArray();
-      $student_ids = array_merge($student_ids_simple, $student_ids_tags);
-
-      //Grab students and merge with previous query
-      $students = Student::whereIn('id', $student_ids)->orderBy('first_name')->paginate($max_results);
-      $students->appends([ 'max_results' => $max_results]);
-
-    }
+    $studentQuery = new StudentSearchQuery;
+    $students = $studentQuery->search($search_text, $max_results);
 
     //Get all the available tags as a string
     $tagsController = new TagsController();
@@ -204,7 +138,7 @@ class StudentsController extends Controller
     $notes = $this->searchNotes($student, urldecode($request->input('note-search')));
 
     //Get all of the year groups
-    $year_groups = YearGroup::all();
+    $year_groups = YearGroup::where('show', true)->get();
 
     //Class list
     $teaching_groups = TeachingGroup::all(['id', 'name']);

@@ -180,7 +180,8 @@ return [
         Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
         //Field encryption / decryption
         \ESolution\DBEncryption\Providers\DBEncryptionServiceProvider::class,
-
+        //Database backup
+        Spatie\Backup\BackupServiceProvider::class,
     ],
 
     /*

@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
+use App\Helpers\FunctionLibrary;
 
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Controllers\TagsController;
@@ -106,10 +107,6 @@ class NotesController extends Controller
       //Get request data
       $params = $request->all();
 
-      //Handle allow edit checkbox
-      if (!isset($params['note-allow-edit']))
-        $params['note-allow-edit']=0;
-
       //Get the note to update
       $note = Note::find($params['note-id']);
 
@@ -119,7 +116,7 @@ class NotesController extends Controller
       $note->colour = $params['note-colour'];
       $note->class = $params['note-class'];
       $note->instance_id = $params['note-instance-id'];
-      $note->allow_edit = $params['note-allow-edit'];
+      $note->allow_edit = $request->input('note-allow-edit', 0);
 
       //Save
       $note->save();
@@ -259,8 +256,11 @@ class NotesController extends Controller
       //Grab the current user
       $user = auth()->user();
 
-      //Get the pagination length (if set)
-      $max_results = $request->input("max_results", 20);
+      //Instantiate a function library
+      $functionLibrary = new FunctionLibrary;
+
+      //Get the maximum number of rows for the table
+      $max_results = $functionLibrary->getTableMaxRows($request);
 
       //Grab notes for the authorised user
       $notes = $this->searchNotes($user, urldecode($request->input('note-search')), $max_results);

@@ -1,7 +1,7 @@
-  @extends('layouts.app')
+@extends('layouts.app')
 
 @section('page-title')
-Classes
+Students
 @endsection
 
 @section('content')
@@ -70,12 +70,14 @@ Classes
               </thead>
               <tbody>
 
+              @if (count($students)>0)
+
                 @foreach ($students as $student)
                 <tr>
 
                   <td class="table-cell-clickable" href="{{ route('students.edit', $student->id) }}">{{ $student->getFullName() }}</td>
-                  <td class="table-cell-clickable" href="{{ route('students.edit', $student->id) }}">{{ $student->year->name }}</td>
-                  <td class="table-cell-clickable" href="{{ route('students.edit', $student->id) }}">{{ $student->teaching_group->name }}</td>
+                  <td class="table-cell-clickable" href="{{ route('students.edit', $student->id) }}">@if (isset($student->year->name)){{ $student->year->name }}@endif</td>
+                  <td class="table-cell-clickable" href="{{ route('students.edit', $student->id) }}">@if (isset($student->teaching_group->name)){{ $student->teaching_group->name }}@endif</td>
 
                   <td class="text-center">
 
@@ -96,6 +98,7 @@ Classes
 
                 </tr>
                 @endforeach
+              @endif
 
               </tbody>
             </table>

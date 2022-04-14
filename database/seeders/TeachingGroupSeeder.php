@@ -15,15 +15,21 @@ class TeachingGroupSeeder extends Seeder
      */
     public function run()
     {
-        //Add sample teaching groups
 
+        //Add sample teaching groups
         DB::table("teaching_groups")->insert([
             'name' => 'Unallocated',
         ]);
 
+        //If running in a production environment, don't add any more teaching groups
+        //(User only needs a default 'unallocated' group)
+        if (env('APP_ENV')=="production")
+          return;
+
         DB::table("teaching_groups")->insert([
             'name' => 'Nursery',
         ]);
+
 
         DB::table("teaching_groups")->insert([
             'name' => 'Reception',
@@ -51,6 +57,34 @@ class TeachingGroupSeeder extends Seeder
 
         DB::table("teaching_groups")->insert([
             'name' => 'Year 6',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 7',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 8',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 9',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 10',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 11',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 12',
+        ]);
+
+        DB::table("teaching_groups")->insert([
+            'name' => 'Year 13',
         ]);
 
     }

@@ -31,8 +31,13 @@ class DatabaseSeeder extends Seeder
         $this->call(YearGroupSeeder::class);
         //Seed teaching groups
         $this->call(TeachingGroupSeeder::class);
+
+        //If running in a production environment, don't go any further than this
+        if (env('APP_ENV')=="production")
+          return;
+
         //Seed tags
-        $this->call(TagSeeder::class);
+//        $this->call(TagSeeder::class);
         //Seed students
         Student::factory()->count(300)->create();
     }

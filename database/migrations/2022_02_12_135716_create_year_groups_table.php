@@ -17,6 +17,7 @@ class CreateYearGroupsTable extends Migration
             $table->id();
             $table->integer("year");
             $table->text("name");
+            $table->boolean("show")->default(true);
             $table->timestamps();
         });
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,8 +33,11 @@ class Sidebar extends Model
 
     //Create sidebar items for admin only
     if ($this->user->isAdmin()) {
-      $this->addItem(route("users.index"), "Manage adults", "fa-chalkboard-teacher");
       $this->addItem(route("tags.index"), "Manage tags", "fa-tags");
+      $this->addItem(route("users.index"), "Manage adults", "fa-chalkboard-teacher");
+      $this->addItem(route("year_groups.index"), "Manage year groups", "fa-calendar");
+      $this->addItem(route("settings.index"), "Settings", "fa-cog");
+      $this->addItem(route("backup.index"), "Backups", "fa-hdd");
     }
 
   }

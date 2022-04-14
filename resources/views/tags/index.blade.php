@@ -86,9 +86,7 @@ Tags
                   <th>Tag</th>
                   <th>Description</th>
                   <th class="text-center">Colour</th>
-                  @if ($user->isAdmin())
                   <th class="text-center">Action</th>
-                  @endif
                 </tr>
               </thead>
               <tbody>
@@ -115,7 +113,6 @@ Tags
                   <td class="table-cell-clickable trigger-edit" data-url="{{ route("tags.get", [$tag->id]) }}">{{ $tag->description }}</td>
                   <td class="table-cell-clickable trigger-edit" data-url="{{ route("tags.get", [$tag->id]) }}"><div class="tag-colour-box mx-auto" style="background-color: #{{ $tag->colour }}"></div></td>
 
-                  @if ($user->isAdmin())
                   <td class="text-center">
 
                     <a href="{{ route('students.index', ['search'=>'tag:' . $tag->tag]) }}"
@@ -125,7 +122,7 @@ Tags
                       <i class="fas fa-list"></i>
                     </a>
 
-<?php /*
+                  @if ($user->isAdmin())
                     <a href="{{ route('tags.delete', [$tag->id]) }}"
                       class="btn btn-icon text-gray-700 sa-trigger"
                       title="Delete" data-toggle="tooltip" data-placement="top"
@@ -138,11 +135,10 @@ Tags
                     >
                       <i class="fas fa-trash-alt"></i>
                     </a>
+                  @endif
 
                   </td>
-                  */ ?>
 
-                  @endif
 
                 </tr>
                 @endforeach
@@ -368,45 +364,6 @@ $('#search-button').click(function(e) {
     e.preventDefault();
     $('#search-form').submit();
 });
-
-//--------------------------
-//
-// Delete tag
-//
-//--------------------------
-
-$('#tag-delete').click(function (e) {
-
-  //Prevent default action
-  e.preventDefault();
-
-  var delete_message = "You won't be able to undo this change.";
-  var student_count = $('#tag-data').data('student-count');
-  if (student_count>0) {
-    delete_message = "This tag will be removed from " + student_count + " student";
-    if (student_count>1) delete_message += "s";
-    delete_message +=" and you won't be able to undo this change.";
-  }
-
-  Swal.fire({
-    title: "Are you sure you want to delete the tag '{{ $tag->tag }}'?",
-    text: delete_message,
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, delete this tag'
-    }
-  ).then((result)=>{
-    if (result.isConfirmed) {
-      //Convert from from an add-update form to a delete form
-      $('#edit-form').attr('action', "{{ route('tags.delete') }}?id=" + $('#id').val());
-      $('#edit-form').submit();
-    }
-  });
-
-});
-
 
 </script>
 

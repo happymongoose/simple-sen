@@ -7,6 +7,7 @@ use App\Models\CohortCondition;
 use App\Models\YearGroup;
 use App\Models\TeachingGroup;
 use App\Models\Tag;
+use App\Helpers\FunctionLibrary;
 
 use Illuminate\Http\Request;
 
@@ -85,8 +86,11 @@ class CohortsController extends Controller
     public function index(Request $request)
     {
 
-        //Get the pagination length (if set)
-        $max_results = $request->input("max_results", 20);
+        //Instantiate a function library
+        $functionLibrary = new FunctionLibrary;
+
+        //Get the maximum number of rows for the table
+        $max_results = $functionLibrary->getTableMaxRows($request);
 
         //Grab any search text passed by user
         $search_text = $request->input("search");
@@ -97,7 +101,7 @@ class CohortsController extends Controller
         //Load the students for each cohort
         foreach($cohorts as $cohort)
           $cohort->getStudents();
-        
+
         //Pass the current user to the view
         $user = auth()->user();
 
@@ -114,8 +118,11 @@ class CohortsController extends Controller
 
     public function view(Cohort $cohort, Request $request) {
 
-      //Get the pagination length (if set)
-      $max_results = $request->input("max_results", 20);
+      //Instantiate a function library
+      $functionLibrary = new FunctionLibrary;
+
+      //Get the maximum number of rows for the table
+      $max_results = $functionLibrary->getTableMaxRows($request);
 
       //Get paginated collection of students for this cohort
       $students = $cohort->getPaginatedStudents($max_results);

@@ -9,6 +9,12 @@ class YearGroup extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['year', 'name'];
-    
+    protected $fillable = ['year', 'name', 'age_low'];
+
+    //Year group --> student relationship
+    public function students() {
+        return $this->hasMany(Student::class, 'year_group', 'id');
+    }
+
+
 }

@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Registry;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +45,20 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 
-  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  //First login? If so, redirect to the initialisation pages if any of the following are true
+  //  a) The registry table hasn't been created yet
+  //  b) The registry table has been created, and the 'first-run' value is set to true
+  $registry = new Registry;
+  if ( (!Schema::hasTable('registry')) || ($registry->getValue('first-run')) ) {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'install'])->name('home');
+    Route::get('/install/pg2', [App\Http\Controllers\HomeController::class, 'installPage2'])->name('install_page2');
+    Route::get('/install/pg3', [App\Http\Controllers\HomeController::class, 'installPage3'])->name('install_page3');
+    Route::get('/install/pg4', [App\Http\Controllers\HomeController::class, 'installPage4'])->name('install_page4');
+    Route::get('/install/pg5', [App\Http\Controllers\HomeController::class, 'installPage5'])->name('install_page5');
+    Route::get('/install/pg6', [App\Http\Controllers\HomeController::class, 'installPage6'])->name('install_page6');
+  }
+  else
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
   /*
   |--------------------------------------------------------------------------
@@ -139,7 +155,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
   Route::post('/tags/is-unique', [App\Http\Controllers\TagsController::class, 'isUnique'])->name('tags.is-unique');
   Route::put('/tags/update', [App\Http\Controllers\TagsController::class, 'update'])->name('tags.update');
   Route::put('/tags/store', [App\Http\Controllers\TagsController::class, 'store'])->name('tags.store');
-  Route::put('/tags/delete', [App\Http\Controllers\TagsController::class, 'delete'])->name('tags.delete');
+  Route::get('/tags/delete', [App\Http\Controllers\TagsController::class, 'delete'])->name('tags.delete');
 
   //--------------------------
   //
@@ -156,6 +172,39 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
   //Cohort conditions
   Route::get('/cohorts/conditions/get/{cohort}', [App\Http\Controllers\ConditionSetController::class, 'get'])->name('cohorts_conditions.get');
+
+  //--------------------------
+  //
+  // Year groups
+  //
+  //--------------------------
+
+  Route::get('/year-groups', [App\Http\Controllers\YearGroupController::class, 'index'])->name('year_groups.index');
+  Route::get('/year-groups/{group}/view', [App\Http\Controllers\YearGroupController::class, 'view'])->name('year_groups.view');
+  Route::get('/year-groups/get/{group}', [App\Http\Controllers\YearGroupController::class, 'get'])->name('year_groups.get');
+  Route::put('/year-groups/store', [App\Http\Controllers\YearGroupController::class, 'store'])->name('year_groups.store');
+  Route::put('/year-groups/update', [App\Http\Controllers\YearGroupController::class, 'update'])->name('year_groups.update');
+
+  //--------------------------
+  //
+  // Settings
+  //
+  //--------------------------
+
+  Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+  Route::post('/settings/update', [App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
+
+  //--------------------------
+  //
+  // Back ups
+  //
+  //--------------------------
+
+  Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup.index');
+  Route::get('/backup/download/{file}', [App\Http\Controllers\BackupController::class, 'download'])->name('backup.download');
+  Route::get('/backup/restore/{file}', [App\Http\Controllers\BackupController::class, 'restore'])->name('backup.restore');
+  Route::get('/backup/delete/{file}', [App\Http\Controllers\BackupController::class, 'delete'])->name('backup.delete');
+  Route::get('/backup/run', [App\Http\Controllers\BackupController::class, 'run'])->name('backup.run');
 
 });
 

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Models\Registry;
 use App\Http\Requests\StoreTagRequest;
-use Illuminate\Support\Facades\DB;
+use App\Helpers\FunctionLibrary;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class TagsController extends Controller
@@ -82,8 +83,11 @@ class TagsController extends Controller
     public function index(Request $request)
     {
 
-      //Get the pagination length (if set)
-      $max_results = $request->input("max_results", 20);
+      //Instantiate a function library
+      $functionLibrary = new FunctionLibrary;
+
+      //Get the maximum number of rows for the table
+      $max_results = $functionLibrary->getTableMaxRows($request);
 
       //Grab any search text passed by user
       $search_text = $request->input("search");
